@@ -42,7 +42,8 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public IssueDto getById(Long id) {
-        return null;
+        Issue s = issueRepository.getOne(id);
+        return modelMapper.map(s, IssueDto.class);
     }
 
     @Override
@@ -55,7 +56,21 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Boolean delete(IssueDto isssue) {
-        return null;
+    public Boolean delete(Long id) {
+        issueRepository.deleteById(id);
+        return true;
+    }
+    @Override
+    public IssueDto update(Long id, IssueDto issue) {
+        Issue issueDb = issueRepository.getOne(id);
+        if (issueDb == null)
+            throw new IllegalArgumentException("Issue Does Not Exist");
+
+        issueDb.setDescription(issue.getDescription());
+        issueDb.setDetails(issue.getDetails());
+        issueDb.setIssueStatus(issue.getIssueStatus());
+
+        issueRepository.save(issueDb);
+        return modelMapper.map(issueDb, IssueDto.class);
     }
 }

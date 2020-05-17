@@ -10,4 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //JpaRepository O tabloya aslında bir çok özellik kazandırmaktadır delete save sorting update
 public interface IssueRepository extends JpaRepository<Issue,Long> {
 
+    Issue getBydescription(String description);
+    Issue getBydetails(String details);
+    Issue getByissueStatus(String issueStatus);
 }
